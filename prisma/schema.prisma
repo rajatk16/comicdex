@@ -19,7 +19,7 @@ model Comic {
   title String
   imageURL String
   price Float
-  description String?
+  description String? @db.VarChar(10000)
   artists String
   writer String
   series String

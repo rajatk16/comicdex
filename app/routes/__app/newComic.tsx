@@ -3,8 +3,8 @@ import { useActionData } from '@remix-run/react';
 import type { ActionFunction } from "@remix-run/node";
 
 import { ComicForm } from "~/components/ComicForm";
-import { CreateComic } from '../../services/validations';
-import { createComic } from "../../services/comics.server";
+import { CreateComic } from '../../../services/validations';
+import { createComic } from "../../../services/comics.server";
 
 export const action: ActionFunction = async ({ request }) => {
   const form = await request.formData();
@@ -74,6 +74,7 @@ const NewComic = () => {
   const data = useActionData();
   return (
     <div className='container mx-auto mt-10'>
+      <h1 className='text-3xl text-slate-800 text-center'>Create New Comic</h1>
       <ComicForm method='post' error={data?.error} fields={data?.fields} action="/newComic?index" {...data} />
     </div>
   )
