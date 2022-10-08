@@ -2,32 +2,28 @@ import { json } from '@remix-run/node';
 import { useLoaderData } from "@remix-run/react";
 import type { LoaderFunction } from "@remix-run/node";
 
-import { getComics } from '../../../services/comics.server';
-import { Comic as ComicComponent } from '../../components/Comic';
+import { Series } from '~/components/Series';
+import { getSeries } from 'services/series.server';
+
 
 type LoaderData = {
-  comics: Awaited<ReturnType<typeof getComics>>
+  series: Awaited<ReturnType<typeof getSeries>>
 }
 
 export const loader: LoaderFunction = async () => {
   const data: LoaderData = {
-    comics: await getComics()
+    series: await getSeries({
+      comicsTake: 7
+    })
   }
   return json<LoaderData>(data);
 }
 
 const Index = () => {
-  const { comics } = useLoaderData<LoaderData>();
+  const { series } = useLoaderData();
   return (
-    <div className='container flex gap-4 grid xl:grid-cols-7 md:grid-cols-4 sm:grid-cols-1 mx-auto mt-20'>
-      {comics.map(comic => (
-        <ComicComponent
-          key={comic.id}
-          title={comic.title}
-          imageURL={comic.imageURL}
-          id={comic.id}
-        />
-      ))}
+    <div className='mt-5'>
+      <Series series={series} />
     </div>
   )
 }

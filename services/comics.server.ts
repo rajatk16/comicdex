@@ -3,7 +3,12 @@ import { db } from "./db.server";
 
 export type { Comic } from '@prisma/client';
 
-export const getComics = async (options?: any) => await db.comic.findMany();
+export const getComics = async (options?: any) => await db.comic.findMany({
+  take: options?.take || undefined,
+  where: {
+    seriesId: options?.seriesId || undefined
+  }
+});
 
 export const createComic = async (data: Omit<Comic, 'id' | 'createdAt' | 'updatedAt'>) => await db.comic.create({
   data: {
