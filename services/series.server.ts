@@ -1,7 +1,6 @@
 import { db } from "./db.server";
-import type { Series } from "@prisma/client";
 
-export type { Series };
+export type { Series } from '@prisma/client';
   
 export const getSeries = async (options?: any) => await db.series.findMany({
   include: {
