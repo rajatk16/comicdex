@@ -3,7 +3,7 @@ import { useLoaderData } from "@remix-run/react";
 import type { LoaderFunction } from "@remix-run/node";
 
 import { Series } from '~/components/Series';
-import { getSeries } from 'services/series.server';
+import { getSeries } from '../../../services/series.server';
 
 
 type LoaderData = {
