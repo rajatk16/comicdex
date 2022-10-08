@@ -2,29 +2,39 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["referentialIntegrity"]
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider             = "mysql"
+  url                  = env("DATABASE_URL")
   referentialIntegrity = "prisma"
 }
 
 model Comic {
-  id String @id @default(uuid())
+  id          String   @id @default(uuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  title       String
+  imageURL    String
+  price       Float
+  description String?  @db.VarChar(10000)
+  artists     String
+  writer      String
+  series      String
+  onSaleDate  String?
+  issueNo     Int
+  pageCount   Int
+  starring    String
+  Series      Series?  @relation(fields: [seriesId], references: [id])
+  seriesId    String?
+}
+
+model Series {
+  id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  title String
-  imageURL String
-  price Float
-  description String? @db.VarChar(10000)
-  artists String
-  writer String
-  series String
-  onSaleDate String?
-  issueNo Int
-  pageCount Int
-  starring String
+  title     String
+  comics    Comic[]
 }
